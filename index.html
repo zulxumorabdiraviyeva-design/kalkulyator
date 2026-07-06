@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulyator</title>
+    <style>
+        body {
+            background-color: gray;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        .quti {
+            width: 315px;
+            height: 550px;
+            background-color: black;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            gap: 15px;
+        }
+
+        .ekran {
+            width: 280px;
+            height: 80px;
+            background-color: #333;
+            color: white;
+            font-size: 40px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0 15px;
+            border-radius: 10px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .tugmalar-paneli {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            justify-items: center;
+        }
+
+        .aylana-tugma {
+            width: 65px;
+            height: 65px;
+            background-color: white;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 28px;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .aylana-tugma:active {
+            transform: scale(0.9);
+            background-color: black;
+        }
+
+        .operator {
+            background-color:orange;
+            color: white;
+        }
+
+        .tozalash {
+            background-color: orange;
+            color: white;
+        }
+
+        .nol {
+            grid-column: span 2;
+            width: 140px;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="quti">
+        <div id="natija-ekrani" class="ekran">0</div>
+
+        <div class="tugmalar-paneli">
+            <button class="aylana-tugma tozalash" onclick="ekranniTozalash()">C</button>
+            <button class="aylana-tugma operator" onclick="belgiQushish('/')">/</button>
+            <button class="aylana-tugma operator" onclick="belgiQushish('*')">*</button>
+            <button class="aylana-tugma operator" onclick="ochirish()">←</button>
+
+            <button class="aylana-tugma" onclick="sonQushish('7')">7</button>
+            <button class="aylana-tugma" onclick="sonQushish('8')">8</button>
+            <button class="aylana-tugma" onclick="sonQushish('9')">9</button>
+            <button class="aylana-tugma operator" onclick="belgiQushish('-')">-</button>
+
+            <button class="aylana-tugma" onclick="sonQushish('4')">4</button>
+            <button class="aylana-tugma" onclick="sonQushish('5')">5</button>
+            <button class="aylana-tugma" onclick="sonQushish('6')">6</button>
+            <button class="aylana-tugma operator" onclick="belgiQushish('+')">+</button>
+
+            <button class="aylana-tugma" onclick="sonQushish('1')">1</button>
+            <button class="aylana-tugma" onclick="sonQushish('2')">2</button>
+            <button class="aylana-tugma" onclick="sonQushish('3')">3</button>
+            <button class="aylana-tugma operator" onclick="hisoblash()">=</button>
+
+            <button class="aylana-tugma nol" onclick="sonQushish('0')">0</button>
+            <button class="aylana-tugma" onclick="sonQushish('.')">.</button>
+        </div>
+    </div>
+
+    <script>
+        let displey = document.getElementById('natija-ekrani');
+        let hozirgiIfoda = '';
+        function yangilash() {
+            displey.innerText = hozirgiIfoda === '' ? '0' : hozirgiIfoda;
+        }
+        function sonQushish(son) {
+        if (hozirgiIfoda === '0') hozirgiIfoda = '';
+        hozirgiIfoda += son;
+        yangilash();
+        }
+        
+        function belgiQushish(belgi) {
+        if (hozirgiIfoda === '') return;
+        let oxirgi = hozirgiIfoda.slice(-1);
+        if (['+', '-', '*', '/'].includes(oxirgi)) {
+        hozirgiIfoda = hozirgiIfoda.slice(0, -1);
+        }
+        hozirgiIfoda += belgi;
+        yangilash();
+        }
+        
+        function ekranniTozalash() {
+        hozirgiIfoda = '';
+        yangilash();
+        }
+        
+        function ochirish() {
+        hozirgiIfoda = hozirgiIfoda.slice(0, -1);
+        yangilash();
+        }
+        
+        function hisoblash() {
+        try {
+        hozirgiIfoda = eval(hozirgiIfoda).toString();
+        yangilash();
+        } catch {
+        displey.innerText = 'Xato';
+        hozirgiIfoda = '';
+        }
+        }
+        </script>
+        </body>
+        
+        </html>
